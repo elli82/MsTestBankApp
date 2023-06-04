@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace TeamGrapeBankApp
 {
-    internal class Customer : User
+    public class Customer : User
     {
         //Properties
         public string Adress { get; set; }
@@ -65,7 +65,7 @@ namespace TeamGrapeBankApp
                     break;
                     
                 case 3:
-                    BankAccount.InternalTransaction(loggedInCustomer.Username);
+                    //BankAccount.InternalTransaction(loggedInCustomer.Username);
                     CustomerMenu(loggedInCustomer);
                     break;
                 case 4:

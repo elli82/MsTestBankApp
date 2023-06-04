@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamGrapeBankApp
 {
-    internal class SavingsAccount : BankAccount
+    public class SavingsAccount : BankAccount
     {
         public decimal Interest { get; set; }
 
@@ -34,7 +34,7 @@ namespace TeamGrapeBankApp
         }
 
         //Method to open new savings account
-        internal static void OpenNewSavingsAccount(User loggedInCustomer)
+        public static void OpenNewSavingsAccount(User loggedInCustomer)
         {
             Console.Clear();
 

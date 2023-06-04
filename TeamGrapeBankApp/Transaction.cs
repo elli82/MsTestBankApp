@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamGrapeBankApp
 {
-    internal class Transaction
+    public class Transaction
     {
         //Properties
         public string FromAccount { get; set; }
@@ -13,14 +13,14 @@ namespace TeamGrapeBankApp
         public User ToOwner { get; set; }
         public decimal Amount { get; set; }
         public bool Processed { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public DateTime ProcessedTime { get; set; }
+        //public DateTime CreatedTime { get; set; }
+        //public DateTime ProcessedTime { get; set; }
 
         //List of processed transactions
-        internal static List<Transaction> processedTransactions = new List<Transaction>();
+        public static List<Transaction> processedTransactions = new List<Transaction>();
 
         //Constructor
-        public Transaction(string fromAccount, string toAccount, User fromOwner, User toOwner, decimal amount, bool processed, DateTime createdTime, DateTime processedTime)
+        public Transaction(string fromAccount, string toAccount, User fromOwner, User toOwner, decimal amount, bool processed/*, DateTime createdTime, DateTime processedTime*/)
         {
             FromAccount = fromAccount;
             ToAccount = toAccount;
@@ -28,19 +28,19 @@ namespace TeamGrapeBankApp
             ToOwner = toOwner;
             Amount = amount;
             Processed = processed;
-            CreatedTime = createdTime;
-            ProcessedTime = processedTime;
+            //CreatedTime = createdTime;
+            //ProcessedTime = processedTime;
         }
 
         //Override ToString
         public override string ToString()
         {
-            return $"From account: {FromAccount} (Owner: {FromOwner.Firstname} {FromOwner.Lastname})\nTo account: {ToAccount} (Owner: {ToOwner.Firstname} {ToOwner.Lastname})\nAmount: {BankAccount.RoundTwoDecimals(Amount)}\nIs processed: " +
-                $"{Processed}\nCreated at: {CreatedTime}\nProcessed at: {ProcessedTime}";
+            return $"From account: {FromAccount} (Owner: {FromOwner.Firstname} {FromOwner.Lastname})\nTo account: {ToAccount} (Owner: {ToOwner.Firstname} {ToOwner.Lastname})\nAmount: {BankAccount.RoundTwoDecimals(Amount)}\nIs processed: ";
+                //$"{Processed}\nCreated at: {CreatedTime}\nProcessed at: {ProcessedTime}";
         }
 
         //Method to process a bank account transaction
-        internal static string ProcessTransaction(BankAccount fromAccount, BankAccount toAccount, User fromOwner, User toOwner, decimal amount)
+        public static string ProcessTransaction(BankAccount fromAccount, BankAccount toAccount, User fromOwner, User toOwner, decimal amount)
         {
             string returnMessage = null;
             DateTime createdTime = DateTime.Now;
@@ -78,13 +78,13 @@ namespace TeamGrapeBankApp
             }
 
             //Create Transaction object and store in list of processed transactions
-            processedTransactions.Add(new Transaction(fromAccount.AccountNumber, toAccount.AccountNumber, fromOwner, toOwner, amount, true, createdTime, processedTime));
+            processedTransactions.Add(new Transaction(fromAccount.AccountNumber, toAccount.AccountNumber, fromOwner, toOwner, amount, true/*, createdTime, processedTime*/));
 
             return returnMessage;
         }
 
         //Method to list logged in customers bank account transactions
-        internal static void ListTransactions(User loggedInCustomer)
+        public static void ListTransactions(User loggedInCustomer)
         {
             Console.Clear();
             Console.WriteLine("These are your transactions:\n");
