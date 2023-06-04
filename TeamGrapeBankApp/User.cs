@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace TeamGrapeBankApp
 {
-    internal abstract class User
+        public class User
     {
         //Properties
         public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace TeamGrapeBankApp
             Lastname = lastname;
             LockedOut = lockedOut;
         }
-        internal static void GenerateUsers()
+        public static void GenerateUsers()
         {
             //Create User objects as Admin and Customers and add to list
             //This should be handled by a database in the future
@@ -46,10 +46,8 @@ namespace TeamGrapeBankApp
         }
 
         //Method to login user
-        internal static void Login()
-        {
-            
-
+        public static void Login()
+        {           
             //Welcome message and login logic
             //Loop while entered username doesnt exist
             Console.Clear();
