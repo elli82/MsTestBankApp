@@ -32,7 +32,7 @@ namespace TeamGrapeBankApp
 
             
             //Run login method
-           // User.Login();
+            User.Login();
             
         }
 

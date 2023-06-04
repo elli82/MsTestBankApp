@@ -144,10 +144,10 @@ namespace TeamGrapeBankApp
             return newAccountNumber;
         }
 
-        public static void InternalTransaction(string username, BankAccount FromAccount, BankAccount ToAccount, decimal Amounts)
+        public static void InternalTransaction(string username)
         {
             //Write out the accounts
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine("Bankaccounts");
             List<BankAccount> userBankaccount = bankAccounts.FindAll(x => x.Owner == username);
 
@@ -161,61 +161,29 @@ namespace TeamGrapeBankApp
 
             Console.WriteLine("What account do you want to move money from? ");
 
-            //FromAccount = userBankaccount.Count;
-            //BankAccount AccountFrom = userBankaccount[FromAccount -1];
-            BankAccount AccountFrom = FromAccount;
-
+            int AccountNumberFrom = GetUserAccountSelection(0, userBankaccount.Count, -1);
+            BankAccount AccountFrom = userBankaccount[AccountNumberFrom - 1];
 
             Console.WriteLine("What account do you want to move money to? ");
+            int AccountNumberTo = GetUserAccountSelection(0, userBankaccount.Count, AccountNumberFrom);
 
-            //ToAccount = userBankaccount.Count;
-            //BankAccount AccountTo = userBankaccount[ToAccount -1];
-            BankAccount AccountTo = ToAccount;
+            BankAccount AccountTo = userBankaccount[AccountNumberTo - 1];
 
-            decimal Amount = Amounts;
-
-            //bool parseSuccess;
-            //decimal AmmountMove;
-            //do {
-
-            //    Console.WriteLine("How much money do you want to move? ");
-            //    parseSuccess = decimal.TryParse(Console.ReadLine(), out Amount);
-            //} while (!parseSuccess || Amount < 0);
-
-            ////Find logged in user object by username for use in ProcessTransaction
-            //User ownerObject = User.userList.Find(x => x.Username == username);
-
-            //internal static string ProcessTransaction(BankAccount fromAccount, BankAccount toAccount, User fromOwner, User toOwner, decimal amount)
-
-
-            //Logic to handle same and different currency transfers
-            if (AccountFrom.Currency == AccountTo.Currency)
+            bool parseSuccess;
+            decimal AmmountMove;
+            do
             {
-                AccountFrom.Balance -= Amount;
-                AccountTo.Balance += Amount;
-            }
 
-            else
-            {
-                if (AccountFrom.Currency == "SEK")
-                {
-                    AccountFrom.Balance -= Amount;
-                    AccountTo.Balance += Amount / Admin.currencyDict[AccountTo.Currency];
-                    //returnMessage = $"{Amount} {AccountFrom.Currency} transferred from account {fromAccount.AccountNumber} to account {toAccount.AccountNumber} " +
-                    //    $"at the exchange rate 1 / {Admin.currencyDict[toAccount.Currency]}. Press a key to return to main menu.";
-                }
-                else
-                {
-                    AccountFrom.Balance -= Amount;
-                    AccountTo.Balance += Amount * Admin.currencyDict[AccountFrom.Currency];
-                    //returnMessage = $"{amount} {fromAccount.Currency} transferred from account {fromAccount.AccountNumber} to account {toAccount.AccountNumber} " +
-                    //    $"at the exchange rate 1 * {Admin.currencyDict[fromAccount.Currency]}. Press a key to return to main menu.";
-                }
-            }
+                Console.WriteLine("How much money do you want to move? ");
+                parseSuccess = decimal.TryParse(Console.ReadLine(), out AmmountMove);
+            } while (!parseSuccess || AmmountMove < 0);
 
+            //Find logged in user object by username for use in ProcessTransaction
+            User ownerObject = User.userList.Find(x => x.Username == username);
+
+            Console.WriteLine(Transaction.ProcessTransaction(AccountFrom, AccountTo, ownerObject, ownerObject, AmmountMove));
+            Console.ReadKey();
         }
-
-
 
         private static int GetUserAccountSelection(int minValue, int maxValue, int previousValue)
         {
